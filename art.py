@@ -32,7 +32,7 @@ else:
 logging.basicConfig(level=logging.INFO)
 
 # Set your TVs local IP address. Highly recommend using a static IP address for your TV.
-tv = SamsungTVWS('192.168.0.9')
+tv = SamsungTVWS('192.168.1.7')
 
 # Check if TV is reachable in debug mode
 if args.debug:
@@ -61,6 +61,7 @@ if art_mode == True:
 				# Remove the filenames of images that have already been uploaded
 				files = list(set(files) - set([f['file'] for f in uploaded_files]))
 				files_to_upload = files
+				
 		else:
 				if len(files) == 0:
 						logging.info('No new images to upload.')
@@ -80,6 +81,7 @@ if art_mode == True:
 								remote_filename = uploaded_file['remote_filename']
 								logging.info('Image already uploaded.')
 								break
+				
 				if remote_filename is None:
 						logging.info('Uploading new image: ' + str(file))
 
@@ -91,9 +93,11 @@ if art_mode == True:
 						except Exception as e:
 							logging.error('There was an error: ' + str(e))
 							sys.exit()
-							
-						# Add the filename to the list of uploaded filenames
-						uploaded_files.append({'file': file, 'remote_filename': remote_filename})
+						
+						# If upload is successful 
+						if remote_filename: 
+							# Add the filename to the list of uploaded filenames
+							uploaded_files.append({'file': file, 'remote_filename': remote_filename})
 
 						if not args.upload_all:
 							# Select the uploaded image using the remote file name
