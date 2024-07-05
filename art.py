@@ -53,7 +53,7 @@ if art_mode == True:
 		current_art = tv.art().get_current()
 
 		# Get a list of JPG/PNG files in the folder, and searches recursively if you want to use subdirectories
-		files = [os.path.join(root, f) for root, dirs, files in os.walk(folder_path) for f in files if f.endswith('.jpg') or f.endswith('.png')]
+		files = [os.path.join(root, f) for root, dirs, files in os.walk(folder_path) for f in files if f.endswith( ('.jpg', '.jpeg', '.png') )]
 
 		if args.upload_all:
 				logging.info('Bulk uploading all photos. This may take a while...')
@@ -84,7 +84,7 @@ if art_mode == True:
 						logging.info('Uploading new image: ' + str(file))
 
 						try:
-							if file.endswith('.jpg'):
+							if file.endswith(('.jpg','.jpeg')):
 									remote_filename = tv.art().upload(data, file_type='JPEG', matte="none")
 							elif file.endswith('.png'):
 									remote_filename = tv.art().upload(data, file_type='PNG', matte="none")
